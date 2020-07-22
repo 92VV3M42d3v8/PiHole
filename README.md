@@ -3,7 +3,7 @@
 PiHole in QubesOS [WIP]
 
 
-1. Create a Service VM with sys-firewall as NetVM.
+1. Create a Standalone Service VM with sys-firewall as NetVM from debian template.
 
 2. Disable systemd-resolved.
 
