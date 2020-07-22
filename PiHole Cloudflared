@@ -49,7 +49,9 @@ PiHole Cloudflared in QubesOS [WIP]
 
        sudo nano /etc/default/cloudflared
 
-   Edit configuration file by copying the following in to /etc/default/cloudflared. This file contains the command-line options that get passed to cloudflared on startup:
+   Edit configuration file by copying the following in to /etc/default/cloudflared.
+   
+   This file contains the command-line options that get passed to cloudflared on startup:
 
        # Commandline args for cloudflared
          CLOUDFLARED_OPTS=--port 5053 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query
@@ -60,7 +62,8 @@ PiHole Cloudflared in QubesOS [WIP]
        
        sudo chown cloudflared:cloudflared /usr/local/bin/cloudflared
 
-   Then create the systemd script by copying the following into /etc/systemd/system/cloudflared.service. This will control the running of the service and allow it to run on startup:
+   Then create the systemd script by copying the following into /etc/systemd/system/cloudflared.service.
+   This will control the running of the service and allow it to run on startup:
 
        sudo nano /etc/systemd/system/cloudflared.service
 
@@ -152,6 +155,3 @@ PiHole Cloudflared in QubesOS [WIP]
          sudo systemctl status cloudflared
 
 
-Disclaimer- This documentation is for only my help. This is work in progress, so if anyone comes across it use it at your own risk. This is inspired by work 
-of Patrizio Tufarolo and my own efforts doing that stuff. I don't know about copyright owned by anyone. If anyone want it to be removed please leave a 
-message in issues. I will remove it immediately. Thanks. 
