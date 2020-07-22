@@ -41,7 +41,11 @@ PiHole Cloudflared in QubesOS [WIP]
        
        cloudflared -v
        
-9. Create a cloudflared user to run the daemon:
+9. Configuring cloudflared to run on startup
+
+   Method 1 (Don't use- maybe)
+
+   Create a cloudflared user to run the daemon:
 
        sudo useradd -s /usr/sbin/nologin -r -M cloudflared
 
@@ -88,6 +92,56 @@ PiHole Cloudflared in QubesOS [WIP]
        sudo systemctl enable cloudflared
        sudo systemctl start cloudflared
        sudo systemctl status cloudflared
+       
+    Method 2
+    
+    Proceed to create a configuration file for cloudflared in /etc/cloudflared named config.yml:
+
+       sudo mkdir /etc/cloudflared/
+       sudo nano /etc/cloudflared/config.yml
+
+    Copy the following configuration:
+
+        proxy-dns: true
+        proxy-dns-port: 5053
+        proxy-dns-upstream:
+          - https://1.1.1.1/dns-query
+          - https://1.0.0.1/dns-query
+
+    Now install the service via cloudflared's service command:
+
+         sudo cloudflared service install
+
+    Start the systemd service and check its status:
+
+         sudo systemctl start cloudflared
+         sudo systemctl status cloudflared
+
+     Now test that it is working! Run the following dig command, a response should be returned similar to the one below:
+
+         pi@raspberrypi:~ $ dig @127.0.0.1 -p 5053 google.com
+
+         ; <<>> DiG 9.11.5-P4-5.1-Raspbian <<>> @127.0.0.1 -p 5053 google.com
+         ; (1 server found)
+         ;; global options: +cmd
+         ;; Got answer:
+         ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 12157
+         ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+         ;; OPT PSEUDOSECTION:
+         ; EDNS: version: 0, flags:; udp: 4096
+         ; COOKIE: 22179adb227cd67b (echoed)
+         ;; QUESTION SECTION:
+         ;google.com.                    IN      A
+
+         ;; ANSWER SECTION:
+         google.com.             191     IN      A       172.217.22.14
+ 
+         ;; Query time: 0 msec
+         ;; SERVER: 127.0.0.1#5053(127.0.0.1)
+         ;; WHEN: Wed Dec 04 09:29:50 EET 2019
+         ;; MSG SIZE  rcvd: 77
+
        
 10. Configuring Pi-hole
 
