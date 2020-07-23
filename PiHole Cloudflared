@@ -104,6 +104,8 @@ PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP]
           - https://dns1.nextdns.io/416faa
           - https://dns2.nextdns.io/416faa
 
+    Replace 416faa (Bogus) with your NextDNS ID.
+    
     Now install the service via cloudflared's service command:
 
          sudo cloudflared service install
