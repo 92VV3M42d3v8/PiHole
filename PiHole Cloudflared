@@ -1,6 +1,6 @@
 # PiHole
 
-PiHole Cloudflared in QubesOS [WIP]
+PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP]
 
 
 1. Create a Standalone Service VM with sys-firewall as NetVM from debian template.
@@ -22,9 +22,7 @@ PiHole Cloudflared in QubesOS [WIP]
 5. Clone PiHole repository and run-
 
        git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
-       
        cd "Pi-hole/automated install/"
-       
        sudo bash basic-install.sh
        
 6. Follow the instructions. Set any DNS. Note down the last page password and addresses.
@@ -36,9 +34,7 @@ PiHole Cloudflared in QubesOS [WIP]
    # For Debian/Ubuntu
    
        wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-       
        sudo apt-get install ./cloudflared-stable-linux-amd64.deb
-       
        cloudflared -v
        
 9. Configuring cloudflared to run on startup
@@ -105,8 +101,8 @@ PiHole Cloudflared in QubesOS [WIP]
         proxy-dns: true
         proxy-dns-port: 5053
         proxy-dns-upstream:
-          - https://1.1.1.1/dns-query
-          - https://1.0.0.1/dns-query
+          - https://dns1.nextdns.io/416faa
+          - https://dns2.nextdns.io/416faa
 
     Now install the service via cloudflared's service command:
 
@@ -117,7 +113,7 @@ PiHole Cloudflared in QubesOS [WIP]
          sudo systemctl start cloudflared
          sudo systemctl status cloudflared
 
-     Now test that it is working! Run the following dig command, a response should be returned similar to the one below:
+     Now test that it is working! Run the following dig command, a response should be returned similar to the one below:(Untested)
 
          pi@raspberrypi:~ $ dig @127.0.0.1 -p 5053 google.com
 
@@ -156,7 +152,6 @@ PiHole Cloudflared in QubesOS [WIP]
 9.  Copy and paste following-
 
         #!/bin/sh
-        
         # This will Flush PR-QBS chain
         iptables -t nat -F PR-QBS
 
@@ -165,13 +160,11 @@ PiHole Cloudflared in QubesOS [WIP]
 
         # Accepts the traffic coming to localhost
         # from XEN's virtual interfaces on port 53
-
         iptables -I INPUT -i vif+ -p udp --dport 53 -d 127.0.0.1 -j ACCEPT
 
         # Enable the traffic coming from the virtual interfaces
         # forwarded to the loopback interface
         # enabling the route_localnet flag on them
-
         echo 1 > /proc/sys/net/ipv4/conf/default/route_localnet
          
     Press Ctrl+X then Y and Enter.
@@ -187,9 +180,7 @@ PiHole Cloudflared in QubesOS [WIP]
    Enter following details-
  
           interface=lo
-          
           bind-interfaces
-          
           conf-dir=/etc/dnsmasq.d
           
    Save this file.
