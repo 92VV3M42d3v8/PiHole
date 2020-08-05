@@ -176,4 +176,4 @@ PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP]
          cloudflared -v
          sudo systemctl status cloudflared
 
-These guides are based on work of many other people and this is for my use only. I don't know about any copyright issues.
+Reviews and Corrections highly Appreciated as I consider it WIP.
