@@ -1,9 +1,10 @@
 # PiHole
 
-PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP]
+PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP but works excellent, although I don't provide any warranty]
 
 
-1. Create a Standalone Service VM with sys-firewall as NetVM from debian template.
+1. Create a Standalone Service VM with sys-firewall as NetVM from debian template. 
+   (All commands shown below are to be run in this qube only)
 
 2. Disable systemd-resolved.
 
@@ -27,9 +28,17 @@ PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP]
        
 6. Follow the instructions. Set any DNS. Note down the last page password and addresses.
 
-7. Create a new VM and set PiHole VM as its NetVM.
+7. Create a new VM and set PiHole VM as its NetVM. You can do this with one of your previous VM's also.
 
-8. Installing cloudflared
+8. Installing cloudflared -
+
+   Along with releasing their DNS service 1.1.1.1, Cloudflare implemented DNS-Over-HTTPS proxy functionality into one of their tools: cloudflared.
+
+   In the following sections, we will be covering how to install and configure this tool on Pi-hole.
+
+   Note: The cloudflared binary will work with other DoH providers (for example, you could use https://8.8.8.8/dns-query for Google's DNS-Over-HTTPS service).
+   
+   If anyone among readers have better tools than cloudflared in knowledge, Please let me know.
 
    # For Debian/Ubuntu
    
@@ -39,7 +48,7 @@ PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP]
        
 9. Configuring cloudflared to run on startup
 
-   Method 1 (Don't use- maybe)
+   Method 1 (I haven't tried this one, method 2 is tested.)
 
    Create a cloudflared user to run the daemon:
 
@@ -177,3 +186,8 @@ PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP]
          sudo systemctl status cloudflared
 
 Reviews and Corrections highly Appreciated as I consider it WIP.
+
+Reference -
+
+1. https://blog.tufarolo.eu/how-to-configure-pihole-in-qubesos-proxyvm/
+2. https://docs.pi-hole.net/guides/dns-over-https/
