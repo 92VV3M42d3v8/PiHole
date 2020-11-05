@@ -28,7 +28,7 @@ PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP but works excel
        
 6. Follow the instructions. Set any DNS. Note down the last page password and addresses.
 
-7. Create a new VM and set PiHole VM as its NetVM. You can do this with one of your previous VM's also.
+7. Create a new VM and set PiHole VM as its NetVM. You can do this with one of your previous VM's also. Restart PiHole VM.
 
 8. Installing cloudflared -
 
@@ -117,7 +117,7 @@ PiHole Cloudflared in QubesOS with NextDNS (DNS over Https) [WIP but works excel
     
     Now install the service via cloudflared's service command:
 
-         sudo cloudflared service install
+         sudo cloudflared service install --legacy
 
     Start the systemd service and check its status:
 
@@ -191,3 +191,4 @@ Reference -
 
 1. https://blog.tufarolo.eu/how-to-configure-pihole-in-qubesos-proxyvm/
 2. https://docs.pi-hole.net/guides/dns-over-https/
+3. https://nextdns.io/
